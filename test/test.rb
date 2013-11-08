@@ -17,14 +17,14 @@ include Test::Unit::Assertions
 class TestScorer < Test::Unit::TestCase
 
   def setup
-    @scorer = TextMood.new({:lang => "en_US"})
+    @tm = TextMood.new({:lang => "en_US"})
   end
 
   def test_negative
     max = -0.01
     texts = ["This is just terrible"]
     texts.each do |text|
-      actual_score = @scorer.score_text(text)
+      actual_score = @tm.analyze(text)
       assert((actual_score < max), "actual: #{actual_score} >= max: #{max} for '#{text}'")
     end
   end
@@ -34,7 +34,7 @@ class TestScorer < Test::Unit::TestCase
     max =  0.5
     texts = ["This is neutral"]
     texts.each do |text, test_score|
-      actual_score = @scorer.score_text(text)
+      actual_score = @tm.analyze(text)
       assert((actual_score < max and actual_score > min), "min: #{min} <= actual: #{actual_score} >= max: #{max} for '#{text}'")
     end
   end
@@ -43,7 +43,7 @@ class TestScorer < Test::Unit::TestCase
     min = 0.01
     texts = ["This is amazing!"]
     texts.each do |text, test_score|
-      actual_score = @scorer.score_text(text)
+      actual_score = @tm.analyze(text)
       assert((actual_score >= min), "actual: #{actual_score} <= max: #{min} for '#{text}'")
     end
   end

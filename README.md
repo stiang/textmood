@@ -1,14 +1,19 @@
 ## TextMood - Simple sentiment analyzer
-*TextMood* is a simple sentiment analyzer, provided as a Ruby gem with a command-line
-tool for simple interoperability with other processes. It takes text as input and 
-returns a sentiment score. Above 0 is typically considered positive, below is 
-considered negative.
+*TextMood* is a simple but powerful sentiment analyzer, provided as a Ruby gem with 
+a command-line tool for simple interoperability with other processes. It takes text 
+as input and returns a sentiment score.
 
-The goal is to have a robust and simple tool that comes with baseline sentiment files
-for many languages.
+The sentiment analysis is relatively simple, and works by splitting the text into
+tokens and comparing each token to a pre-selected sentiment score for that token.
+The combined score for all tokens is then returned.
+
+However, TextMood also supports doing multiple passes over the text, splitting
+it into tokens of N words (N-grams) for each pass. By adding multi-word tokens to 
+the sentiment file and using this feature, you can achieve much greater accuracy
+than with just single-word analysis.
 
 ### Installation
-The easiest way to get the latest stable version is to use gem:
+The easiest way to get the latest stable version is to install the gem:
 
     gem install textmood
 
@@ -17,27 +22,50 @@ If you’d like to get the bleeding-edge version:
     git clone https://github.com/stiang/textmood
 
 ### Usage
-TextMood can be used as a ruby library or as a standalone CLI tool.
+TextMood can be used as a Ruby library or as a standalone CLI tool.
 
 #### Ruby library
-You can use textmood in a ruby program like this:
+You can use it in a Ruby program like this:
 ```ruby
 require "textmood"
 
 # The :lang parameter makes TextMood use one of the bundled language sentiment files
-scorer = TextMood.new(lang: "en_US")
-score = scorer.score_text("some text")
+tm = TextMood.new(lang: "en_US")
+score = tm.analyze("some text")
 #=> '1.121'
 
 # The :files parameter makes TextMood ignore the bundled sentiment files and use the
 # specified files instead. You can specify as many files as you want.
-scorer = TextMood.new(files: ["en_US-mod1.txt", "emoticons.txt"])
+tm = TextMood.new(files: ["en_US-mod1.txt", "emoticons.txt"])
+
+# Using :normalize_output, you can make TextMood return a normalized value: 
+# 1 for positive, 0 for neutral and -1 for negative
+tm = TextMood.new(lang: "en_US", normalize_output: true)
+score = tm.analyze("some text")
+#=> '1'
+
+# :normalize_score will try to normalize the score to an integer between +/- 100,
+# based on how many tokens were scored, which can be useful when trying to compare
+# scores for texts of different length
+tm = TextMood.new(lang: "en_US", normalize_score: true)
+score = tm.analyze("some text")
+#=> '14'
+
+# :min_threshold and :max_threshold lets you customize the way :normalize_output 
+# treats different values. The options below will make all scores below 1 negative, 
+# 1-2 will be neutral, and above 2 will be positive.
+tm = TextMood.new(lang: "en_US", 
+                      normalize_output: true, 
+                      min_threshold: 1, 
+                      max_threshold: 2)
+score = tm.analyze("some text")
+#=> '0'
 
 # TextMood will by default make one pass over the text, checking every word, but it
 # supports doing several passes for any range of word N-grams. Both the start and end 
 # N-gram can be specified using the :start_ngram and :end_ngram options
-scorer = TextMood.new(lang: "en_US", debug: true, start_ngram: 2, end_ngram: 3)
-score = scorer.score_text("some long text with many words")
+tm = TextMood.new(lang: "en_US", debug: true, start_ngram: 2, end_ngram: 3)
+score = tm.analyze("some long text with many words")
 #(stdout): some long: 0.1
 #(stdout): long text: 0.1
 #(stdout): text with: -0.1
@@ -49,23 +77,10 @@ score = scorer.score_text("some long text with many words")
 #(stdout): with many words: 0.1
 #=> '0.1'
 
-# Using :normalize, you can make TextMood return a normalized value: 1 for positive, 
-# 0 for neutral and -1 for negative
-scorer = TextMood.new(lang: "en_US", normalize: true)
-score = scorer.score_text("some text")
-#=> '1'
-
-# :min_threshold and :max_threshold lets you customize the way :normalize treats
-# different values. The options below will make all scores below 1 negative, 
-# 1-2 will be neutral, and above 2 will be positive.
-scorer = TextMood.new(lang: "en_US", normalize: true, min_threshold: 1, max_threshold: 2)
-score = scorer.score_text("some text")
-#=> '0'
-
 # :debug prints out all tokens to stdout, alongs with their values (or 'nil' when the
 # token was not found)
-scorer = TextMood.new(lang: "en_US", debug: true)
-score = scorer.score_text("some text")
+tm = TextMood.new(lang: "en_US", debug: true)
+score = tm.analyze("some text")
 #(stdout): some: 0.1
 #(stdout): text: 0.1
 #(stdout): some text: -0.1

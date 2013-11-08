@@ -111,8 +111,8 @@ end
 opts_parser.parse!
 
 def do_main(text, options)
-  scorer = TextMood.new(options)
-  puts scorer.score_text(text)
+  tm = TextMood.new(options)
+  puts tm.analyze(text)
 end
 
 if ARGV[0]

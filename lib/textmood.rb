@@ -37,7 +37,7 @@ class TextMood
   end
 
   # analyzes the sentiment of the provided text.
-  def score_text(text)
+  def analyze(text)
     sentiment_total = 0.0
 
     scores_added = 0
@@ -66,6 +66,8 @@ class TextMood
       sentiment_total
     end
   end
+
+  alias_method :analyse, :analyze
 
   private
 
@@ -115,8 +117,8 @@ class TextMood
   end
 
   def normalize_score(score, count)
-    factor = NORMALIZE_TO / count
-    (score * factor).to_i
+    factor = NORMALIZE_TO.to_f / count.to_f
+    (score * factor).round
   end
 
 end
