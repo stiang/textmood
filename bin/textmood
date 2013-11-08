@@ -100,9 +100,18 @@ opts_parser = OptionParser.new do |opts|
 end
 opts_parser.parse!
 
-if ARGV[0]
+def do_main(text, options)
   scorer = TextMood.new(options)
-  puts scorer.score_text(ARGV[0])
+  puts scorer.score_text(text)
+end
+
+if ARGV[0]
+  do_main(ARGV[0], options)
 else
-  mini_usage(usage, true)
+  text = $stdin.read
+  if text
+    do_main(text, options)
+  else
+    mini_usage(usage, true)
+  end
 end
