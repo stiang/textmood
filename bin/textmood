@@ -63,7 +63,7 @@ opts_parser = OptionParser.new do |opts|
   opts.separator ""
   opts.on("-s", "--normalize-score", "Tries to normalize the score to an integer between +/- 100",
                                      "according to the number of tokens that were scored, making",
-                                     "it more feasible to compare scores between texts of different",
+                                     "it more feasible to compare scores for texts of different",
                                      "length") do |ns|
     options[:normalize_score] = true
   end

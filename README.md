@@ -89,6 +89,8 @@ The cli tool has many useful options, mostly mirroring those of the library. Her
 output from `textmood -h`:
 ```
 Usage: textmood [options] "<text>"
+            OR
+       echo "<text>" | textmood [options]
 
 Returns a floating-point sentiment score of the provided text.
 Above 0 is considered positive, below is considered negative.
@@ -104,28 +106,32 @@ MANDATORY options:
                                      files will be loaded if this option is used.
 
 OPTIONAL options:
-        --start-ngram INTEGER        The lowest word N-gram number to split the text into
+    -o, --normalize-output           Return 1 (positive), -1 (negative) or 0 (neutral)
+                                     instead of the actual score. See also --min and --max.
+
+    -s, --normalize-score            Tries to normalize the score to an integer between +/- 100
+                                     according to the number of tokens that were scored, making
+                                     it more feasible to compare scores for texts of different
+                                     length
+
+    -i, --min-threshold FLOAT        Scores lower than this are considered negative when
+                                     using --normalize-output (default 0.5). Note that the
+                                     threshold is compared to the normalized score, if applicable
+
+    -x, --max-threshold FLOAT        Scores higher than this are considered positive when
+                                     using --normalize-output (default 0.5). Note that the
+                                     threshold is compared to the normalized score, if applicable
+
+    -b, --start-ngram INTEGER        The lowest word N-gram number to split the text into
                                      (default 1). Note that this only makes sense if the
                                      sentiment file has tokens of similar N-gram length
 
-        --end-ngram INTEGER          The highest word N-gram number to to split the text into
+    -e, --end-ngram INTEGER          The highest word N-gram number to to split the text into
                                      (default 1). Note that this only makes sense if the
                                      sentiment file has tokens of similar N-gram length
 
-    -n, --normalize-output           Return 1 (positive), -1 (negative) or 0 (neutral)
-                                     instead of the actual score. See also --min and --max.
-
-        --normalize-score            Return 1 (positive), -1 (negative) or 0 (neutral)
-                                     instead of the actual score. See also --min and --max.
-
-        --min-threshold FLOAT        Scores lower than this are considered negative when
-                                     using --normalize (default -0.5)
-
-        --max-threshold FLOAT        Scores higher than this are considered positive when
-                                     using --normalize (default 0.5)
-
-    -s, --skip-symbols               Do not include symbols file (emoticons etc.).
-                                     Only applies when using -l/--language.
+    -k, --skip-symbols               Do not include symbols file (emoticons etc.). Only applies
+                                     when using -l/--language.
 
     -d, --debug                      Prints out the score for each token in the provided text
                                      or 'nil' if the token was not found in the sentiment file
