@@ -79,6 +79,12 @@ textmood -l en_US "<some text>"
 -0.4375
 ```
 
+Alternatively, you can pipe some text to textmood on stdin:
+```bash
+echo "<some text>" | textmood -l en_US
+-0.4375
+```
+
 The cli tool has many useful options, mostly mirroring those of the library. Here’s the
 output from `textmood -h`:
 ```

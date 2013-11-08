@@ -13,7 +13,7 @@ $:.unshift File.join(File.dirname(__FILE__), *%w{ .. lib })
 require "optparse"
 require "textmood"
 
-usage = "Usage: #{File.basename($0)} [options] \"<text>\""
+usage = "Usage: #{File.basename($0)} [options] \"<text>\"\n            OR\n       echo \"<text>\" | #{File.basename($0)} [options]"
 
 def mini_usage(usage, notext = false)
   puts usage
@@ -21,7 +21,8 @@ def mini_usage(usage, notext = false)
   if notext
     puts "ERROR: Quoted text must be provided after the last option."
   else
-    puts "ERROR: An IETF language tag must be provided using the -l/--language option."
+    puts "ERROR: An IETF language tag must be provided using the -l/--language option,"
+    puts "       or sentiment files must be provided with the -f/--file option."
   end
   puts ""
   puts "Use \"#{File.basename($0)} -h\" for full usage info."
