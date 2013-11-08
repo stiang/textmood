@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.date          = '2013-11-08'
   s.summary       = "TextMood"
   s.description   = "Simple sentiment analyzer with CLI tool"
-  s.authors       = ["Stian Grytøyr"]
+  s.authors       = ["Stian Grytoyr"]
   s.email         = 'stian@grytoyr.net'
   s.homepage      = 'https://github.com/stiang/textmood'
   s.license       = 'MIT'
