@@ -73,13 +73,14 @@ score = scorer.score_text("some text")
 ```
 
 #### CLI tool
-Or you can simply pass some UTF-8-encoded text to the cli tool and get a score back, like so 
+You can also pass some UTF-8-encoded text to the CLI tool and get a score back, like so 
 ```bash
 textmood -l en_US "<some text>"
 -0.4375
 ```
 
-The cli tool has many useful options, mostly mirroring those of the library:
+The cli tool has many useful options, mostly mirroring those of the library. Here’s the
+output from `textmood -h`:
 ```
 Usage: textmood [options] "<text>"
 
