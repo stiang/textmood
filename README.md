@@ -179,6 +179,11 @@ and contain one colon-separated line per token, like so:
 The score, which must be between -1.0 and 1.0, is to the left of the first ':', 
 and everything to the right is the (potentially multi-word) token.
 
+# TODO
+* Add more sentiment language files
+* Improve sentiment files, adding bigrams and trigrams
+* Improve test coverage
+
 ## Contribute
 Including baseline word/N-gram scores for many different languages is one 
 of the expressed goals of this project. If you are able to contribute scores 
