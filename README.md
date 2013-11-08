@@ -21,7 +21,7 @@ If you’d like to get the bleeding-edge version:
 
     git clone https://github.com/stiang/textmood
 
-The *master* branch will mostly be in sync with the gem, but there may be
+The *master* branch will normally be in sync with the gem, but there may be
 newer code in branches.
 
 ### Usage
