@@ -121,6 +121,28 @@ OPTIONAL options:
     -h, --help                       Show this message
 ```
 
+## Sentiment files
+The included sentiment files reside in the *lang* directory. I hope to add many
+more baseline sentiment files in the future.
+
+Sentiment files should be named according to the IETF language tag, like *en_US*,
+and contain one colon-separated line per token, like so:
+```
+1.0: epic
+1.0: good
+1.0: upright
+0.958: fortunate
+0.875: wonderfulness
+0.875: wonderful
+0.875: wide-eyed
+0.875: wholesomeness
+0.875: well-to-do
+0.875: well-situated
+0.6: well suited
+```
+The score is to the left of the first ':', and everything to the right is the
+(potentially multi-word) token.
+
 ## Contribute
 Including baseline word/N-gram scores for many different languages is one 
 of the main goals of this project. If you are able to contribute scores 
