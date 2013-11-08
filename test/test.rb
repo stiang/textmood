@@ -9,7 +9,8 @@ else
 end
 
 require "test/unit"
-require "./#{File.dirname(__FILE__)}/../lib/textmood"
+# require "./#{File.dirname(__FILE__)}/../lib/textmood"
+require "textmood"
 
 include Test::Unit::Assertions
 

@@ -1,9 +1,11 @@
 ## TextMood - Simple sentiment analyzer
 *TextMood* is a simple sentiment analyzer, provided as a Ruby gem with a command-line
-tool for simple piping from other processes. It takes text as input and returns a sentiment 
-score. Above 0 is typically considered positive, below is considered negative.
+tool for simple interoperability with other processes. It takes text as input and 
+returns a sentiment score. Above 0 is typically considered positive, below is 
+considered negative.
 
-The goal is to have a robust and simple tool that comes with 
+The goal is to have a robust and simple tool that comes with baseline sentiment files
+for many languages.
 
 ### Installation
 The easiest way to get the latest stable version is to use gem:
@@ -145,7 +147,7 @@ The score is to the left of the first ':', and everything to the right is the
 
 ## Contribute
 Including baseline word/N-gram scores for many different languages is one 
-of the main goals of this project. If you are able to contribute scores 
+of the expressed goals of this project. If you are able to contribute scores 
 for a missing language or improve an existing one, it would be much appreciated!
 
 The process is the usual:

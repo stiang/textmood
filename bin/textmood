@@ -8,8 +8,10 @@ else
   Encoding.default_internal = Encoding::UTF_8
 end
 
-require "./#{File.dirname(__FILE__)}/../lib/textmood"
+$:.unshift File.join(File.dirname(__FILE__), *%w{ .. lib })
+
 require "optparse"
+require "textmood"
 
 usage = "Usage: #{File.basename($0)} [options] \"<text>\""
 

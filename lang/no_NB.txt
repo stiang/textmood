@@ -932,6 +932,7 @@
 0.5: granske
 0.5: skeptisk
 0.5: skandaløst
+0.5: skandale
 0.5: brutalt
 0.5: tilfredsstillende
 0.5: helliggjøre
