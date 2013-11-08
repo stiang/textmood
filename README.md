@@ -38,15 +38,15 @@ scorer = TextMood.new(files: ["en_US-mod1.txt", "emoticons.txt"])
 # N-gram can be specified using the :start_ngram and :end_ngram options
 scorer = TextMood.new(lang: "en_US", debug: true, start_ngram: 2, end_ngram: 3)
 score = scorer.score_text("some long text with many words")
-#=> some long: 0.1
-#=> long text: 0.1
-#=> text with: -0.1
-#=> with many: -0.1
-#=> many words: -0.1
-#=> some long text: -0.1
-#=> long text with: 0.1
-#=> text with many: 0.1
-#=> with many words: 0.1
+#(stdout): some long: 0.1
+#(stdout): long text: 0.1
+#(stdout): text with: -0.1
+#(stdout): with many: -0.1
+#(stdout): many words: -0.1
+#(stdout): some long text: -0.1
+#(stdout): long text with: 0.1
+#(stdout): text with many: 0.1
+#(stdout): with many words: 0.1
 #=> '0.1'
 
 # Using :normalize, you can make TextMood return a normalized value: 1 for positive, 
@@ -66,9 +66,9 @@ score = scorer.score_text("some text")
 # token was not found)
 scorer = TextMood.new(lang: "en_US", debug: true)
 score = scorer.score_text("some text")
-#=> some: 0.1
-#=> text: 0.1
-#=> some text: -0.1
+#(stdout): some: 0.1
+#(stdout): text: 0.1
+#(stdout): some text: -0.1
 #=> '0.1'
 ```
 
