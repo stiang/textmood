@@ -38,12 +38,6 @@ score = tm.analyze("some text")
 # specified files instead. You can specify as many files as you want.
 tm = TextMood.new(files: ["en_US-mod1.txt", "emoticons.txt"])
 
-# Using :normalize_output, you can make TextMood return a normalized value: 
-# 1 for positive, 0 for neutral and -1 for negative
-tm = TextMood.new(lang: "en_US", normalize_output: true)
-score = tm.analyze("some text")
-#=> '1'
-
 # :normalize_score will try to normalize the score to an integer between +/- 100,
 # based on how many tokens were scored, which can be useful when trying to compare
 # scores for texts of different length
@@ -51,13 +45,21 @@ tm = TextMood.new(lang: "en_US", normalize_score: true)
 score = tm.analyze("some text")
 #=> '14'
 
-# :min_threshold and :max_threshold lets you customize the way :normalize_output 
-# treats different values. The options below will make all scores below 1 negative, 
-# 1-2 will be neutral, and above 2 will be positive.
+# :ternary_output will make TextMood return one of three fixed values:
+# 1 for positive, 0 for neutral and -1 for negative
+tm = TextMood.new(lang: "en_US", ternary_output: true)
+score = tm.analyze("some text")
+#=> '1'
+
+# :min_threshold and :max_threshold lets you customize the way :ternary_output 
+# treats different values. The options below will make all scores below 10 negative, 
+# 10-20 will be neutral, and above 20 will be positive. Note that these thresholds
+# are compared to the normalized score, if applicable.
 tm = TextMood.new(lang: "en_US", 
-                      normalize_output: true, 
-                      min_threshold: 1, 
-                      max_threshold: 2)
+                  ternary_output: true, 
+                  normalize_score: true, 
+                  min_threshold: 10, 
+                  max_threshold: 20)
 score = tm.analyze("some text")
 #=> '0'
 
@@ -121,23 +123,24 @@ MANDATORY options:
                                      files will be loaded if this option is used.
 
 OPTIONAL options:
-    -o, --normalize-output           Return 1 (positive), -1 (negative) or 0 (neutral)
-                                     instead of the actual score. See also --min and --max.
-
-    -s, --normalize-score            Tries to normalize the score to an integer between +/- 100
+    -n, --normalize-score            Tries to normalize the score to an integer between +/- 100
                                      according to the number of tokens that were scored, making
                                      it more feasible to compare scores for texts of different
                                      length
 
+    -t, --ternary-output             Return 1 (positive), -1 (negative) or 0 (neutral)
+                                     instead of the actual score. See also --min-threshold
+                                     and --max-threshold.
+
     -i, --min-threshold FLOAT        Scores lower than this are considered negative when
-                                     using --normalize-output (default 0.5). Note that the
+                                     using --ternary-output (default 0.5). Note that the
                                      threshold is compared to the normalized score, if applicable
 
     -x, --max-threshold FLOAT        Scores higher than this are considered positive when
-                                     using --normalize-output (default 0.5). Note that the
+                                     using --ternary-output (default 0.5). Note that the
                                      threshold is compared to the normalized score, if applicable
 
-    -b, --start-ngram INTEGER        The lowest word N-gram number to split the text into
+    -s, --start-ngram INTEGER        The lowest word N-gram number to split the text into
                                      (default 1). Note that this only makes sense if the
                                      sentiment file has tokens of similar N-gram length
 

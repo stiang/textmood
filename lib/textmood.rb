@@ -54,7 +54,7 @@ class TextMood
     if @options[:normalize_score]
       sentiment_total = normalize_score(sentiment_total, scores_added)
     end
-    if @options[:normalize_output]
+    if @options[:ternary_output]
       if sentiment_total > @options[:max_threshold]
         1
       elsif sentiment_total < @options[:min_threshold]
