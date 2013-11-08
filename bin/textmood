@@ -56,35 +56,44 @@ opts_parser = OptionParser.new do |opts|
   end
   opts.separator ""
   opts.separator "OPTIONAL options:"
-  opts.on("--start-ngram INTEGER", "The lowest word N-gram number to split the text into",
+  opts.on("-o", "--normalize-output", "Return 1 (positive), -1 (negative) or 0 (neutral)",
+                                      "instead of the actual score. See also --min and --max.") do |n|
+    options[:normalize_output] = true
+  end
+  opts.separator ""
+  opts.on("-s", "--normalize-score", "Tries to normalize the score to an integer between +/- 100",
+                                     "according to the number of tokens that were scored, making",
+                                     "it more feasible to compare scores between texts of different",
+                                     "length") do |ns|
+    options[:normalize_score] = true
+  end
+  opts.separator ""
+  opts.on("-i", "--min-threshold FLOAT", "Scores lower than this are considered negative when",
+                                   "using --normalize-output (default 0.5). Note that the",
+                                   "threshold is compared to the normalized score, if applicable") do |min|
+    options[:min_threshold] = min.to_f
+  end
+  opts.separator ""
+  opts.on("-x", "--max-threshold FLOAT", "Scores higher than this are considered positive when",
+                                   "using --normalize-output (default 0.5). Note that the",
+                                   "threshold is compared to the normalized score, if applicable") do |max|
+    options[:max_threshold] = max.to_f
+  end
+  opts.separator ""
+  opts.on("-b", "--start-ngram INTEGER", "The lowest word N-gram number to split the text into",
                                    "(default 1). Note that this only makes sense if the",
                                    "sentiment file has tokens of similar N-gram length") do |start_ngram|
     options[:start_ngram] = start_ngram.to_i
   end
   opts.separator ""
-  opts.on("--end-ngram INTEGER", "The highest word N-gram number to to split the text into",
+  opts.on("-e", "--end-ngram INTEGER", "The highest word N-gram number to to split the text into",
                                  "(default 1). Note that this only makes sense if the",
                                  "sentiment file has tokens of similar N-gram length") do |end_ngram|
     options[:end_ngram] = end_ngram.to_i
   end
   opts.separator ""
-  opts.on("-n", "--normalize", "Return 1 (positive), -1 (negative) or 0 (neutral)",
-                               "instead of the actual score. See also --min and --max.") do |n|
-    options[:normalize] = true
-  end
-  opts.separator ""
-  opts.on("--min-threshold FLOAT", "Scores lower than this are considered negative when",
-                                   "using --normalize (default -0.5)") do |min|
-    options[:min_threshold] = min.to_f
-  end
-  opts.separator ""
-  opts.on("--max-threshold FLOAT", "Scores higher than this are considered positive when",
-                                   "using --normalize (default 0.5)") do |max|
-    options[:max_threshold] = max.to_f
-  end
-  opts.separator ""
-  opts.on("-s", "--skip-symbols", "Do not include symbols file (emoticons etc.).",
-                                  "Only applies when using -l/--language.") do |s|
+  opts.on("-k", "--skip-symbols", "Do not include symbols file (emoticons etc.). Only applies",
+                            "when using -l/--language.") do |s|
     options[:include_symbols] = false
   end
   opts.separator ""

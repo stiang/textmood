@@ -7,6 +7,8 @@ else
   Encoding.default_internal = Encoding::UTF_8
 end
 
+NORMALIZE_TO = 100
+
 class TextMood
 
   def initialize(options = {})
@@ -38,13 +40,21 @@ class TextMood
   def score_text(text)
     sentiment_total = 0.0
 
+    scores_added = 0
     (@options[:start_ngram]..@options[:end_ngram]).each do |i|
       ngrams(i, text.to_s).each do |token|
-        sentiment_total += score_token(token)
+        score = score_token(token)
+        unless score.nil?
+          sentiment_total += score
+          scores_added += 1
+        end
       end
     end
     
-    if @options[:normalize]
+    if @options[:normalize_score]
+      sentiment_total = normalize_score(sentiment_total, scores_added)
+    end
+    if @options[:normalize_output]
       if sentiment_total > @options[:max_threshold]
         1
       elsif sentiment_total < @options[:min_threshold]
@@ -76,7 +86,7 @@ class TextMood
       sentiment_value
     else
       puts "#{used_token}: nil" if @options[:debug]
-      0.0
+      nil
     end
   end
 
@@ -102,6 +112,11 @@ class TextMood
     sentiment_file.close
 
     sentiment_values
+  end
+
+  def normalize_score(score, count)
+    factor = NORMALIZE_TO / count
+    (score * factor).to_i
   end
 
 end

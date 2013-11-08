@@ -8,21 +8,14 @@
 0.87: godt fast
 0.87: upretensiøs
 0.87: undervurdert
-0.87: top-hulls
 0.87: terapeutisk
-0.87: stirrer
-0.87: utlagte masser
 0.87: selvrespekt
-0.87: self-respektfull
-0.87: selvrespekt
-0.87: self-hensyn
 0.87: helsebringende
 0.87: rosenrød i kinnene
 0.87: utstråle
 0.87: utstråling
 0.87: velstand
 0.87: prinsipiell
-0.87: ut-og-ytre
 0.87: moraliserende
 0.87: mesterstykke
 0.87: mesterlig
@@ -64,7 +57,6 @@
 0.75: fagmessig
 0.75: snedig
 0.75: helhet
-0.75: godt gjennomtenkt av
 0.75: velproporsjonert
 0.75: godt bevart
 0.75: godt favoriserte
@@ -78,8 +70,6 @@
 0.75: infisert
 0.75: urettferdig
 0.75: kle
-0.75: revet ut av villfarelse
-0.75: riv ut av villfarelse
 0.75: pålitelighet
 0.75: øverste nivå
 0.75: brødrister
@@ -171,7 +161,6 @@
 0.75: halvhjertede
 0.75: skyldfri
 0.75: pen
-0.75: get-at-stand
 0.75: famlende
 0.75: influensa
 0.75: finere
@@ -252,7 +241,6 @@
 0.68: hedret
 0.68: treffende
 0.68: konstruktiv
-0.68: kommer-at-stand
 0.68: munter
 0.66: produktiv
 0.66: gledelig
@@ -262,11 +250,8 @@
 0.64: verdig
 0.63: god
 0.62: ettergivende
-0.62: lengtet-for
 0.62: verdig
-0.62: ord-splitting
 0.62: lurer
-0.62: ønsket-for
 0.62: klokt
 0.62: velvære
 0.62: velprøvd
@@ -292,19 +277,16 @@
 0.62: ubetenkelig
 0.62: forståelig
 0.62: kraftens
-0.62: Ullr
 0.62: sannferdig
 0.62: tillitsfullt
 0.62: klarert
 0.62: overskride
-0.62: ro
 0.62: ro
 0.62: trening
 0.62: sporbar
 0.62: sporbar
 0.62: totaliteten
 0.62: topper
-0.62: fløtekaramell-nosed
 0.62: forsagt
 0.62: tre kvarter
 0.62: vitnesbyrd
@@ -317,22 +299,18 @@
 0.62: vellykket
 0.62: stilistisk
 0.62: iherdig
-0.62: Stoppable
 0.62: vekst
 0.62: angitt
 0.62: sfærisk
 0.62: tale-endowed
-0.62: Sparer
+0.62: sparer
 0.62: ønsket
 0.62: soignée
-0.62: SOIGNE
 0.62: røykfritt
 0.62: knusende
 0.62: treghet
-0.62: klapse-up
 0.62: synde
 0.62: forenklede
-0.62: SID
 0.62: sjokksikker
 0.62: Shivaree
 0.62: velskapt
@@ -373,7 +351,6 @@
 0.62: oppladbart
 0.62: betryggende
 0.62: rimelig
-0.62: fornyet stadfestelse
 0.62: hev
 0.62: kvantifiserbare
 0.62: målrettet
@@ -411,7 +388,6 @@
 0.62: overtrekk
 0.62: overkompensere
 0.62: rangeres foran
-0.62: ut-og-ut
 0.62: ortodoks
 0.62: rikest
 0.62: overdådig
@@ -429,7 +405,6 @@
 0.62: edelt
 0.62: danser
 0.62: naboskap
-0.62: naturalisering
 0.62: naturalisering
 0.62: narsissisme
 0.62: naivt
@@ -674,6 +649,8 @@
 0.62: ablativ
 0.62: underdanig
 0.62: abbed
+0.62: lykke
+0.62: lykkelig
 0.58: håndgripelig
 0.58: barmhjertig
 0.58: verdighet
@@ -1046,7 +1023,7 @@
 0.50: edel-mindedness
 0.50: knuslete
 0.50: pent
-0.50: ny-laget
+0.50: nylaget
 0.50: nøytralisert
 0.50: nøytralisert
 0.50: nevrobiologiske
@@ -4250,6 +4227,7 @@
 0.20: ladet
 0.20: godartet
 0.20: våken
+0.10: lykkes
 -0.20: stamme
 -0.20: variasjon
 -0.20: varians
@@ -4515,7 +4493,6 @@
 -0.25: sukker-belagt
 -0.25: kvelende
 -0.25: kveles
--0.25: lykkes
 -0.25: underjordiske
 -0.25: underjordiske
 -0.25: innsynkning
@@ -8993,7 +8970,6 @@
 -0.75: hode
 -0.75: Hayseed
 -0.75: Haredi
--0.75: lykke
 -0.75: Hamming
 -0.75: skinke-handed
 -0.75: skinke-fisted

@@ -112,7 +112,10 @@ OPTIONAL options:
                                      (default 1). Note that this only makes sense if the
                                      sentiment file has tokens of similar N-gram length
 
-    -n, --normalize                  Return 1 (positive), -1 (negative) or 0 (neutral)
+    -n, --normalize-output           Return 1 (positive), -1 (negative) or 0 (neutral)
+                                     instead of the actual score. See also --min and --max.
+
+        --normalize-score            Return 1 (positive), -1 (negative) or 0 (neutral)
                                      instead of the actual score. See also --min and --max.
 
         --min-threshold FLOAT        Scores lower than this are considered negative when
@@ -149,8 +152,8 @@ and contain one colon-separated line per token, like so:
 0.875: well-situated
 0.6: well suited
 ```
-The score is to the left of the first ':', and everything to the right is the
-(potentially multi-word) token.
+The score, which must be between -1.0 and 1.0, is to the left of the first ':', 
+and everything to the right is the (potentially multi-word) token.
 
 ## Contribute
 Including baseline word/N-gram scores for many different languages is one 
