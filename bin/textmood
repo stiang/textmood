@@ -53,15 +53,15 @@ opts_parser = OptionParser.new do |opts|
   end
   opts.separator ""
   opts.separator "OPTIONAL options:"
-  opts.on("--start-ngram INTEGER", "The lowest N-gram number to split the text into (default 1).",
-                                   "Note that this only makes sense if the sentiment file",
-                                   "has tokens of similar N-gram length") do |start_ngram|
+  opts.on("--start-ngram INTEGER", "The lowest word N-gram number to split the text into",
+                                   "(default 1). Note that this only makes sense if the",
+                                   "sentiment file has tokens of similar N-gram length") do |start_ngram|
     options[:start_ngram] = start_ngram.to_i
   end
   opts.separator ""
-  opts.on("--end-ngram INTEGER", "The highest N-gram number to to split the text into (default 1).",
-                                 "Note that this only makes sense if the sentiment file",
-                                 "has tokens of similar N-gram length") do |end_ngram|
+  opts.on("--end-ngram INTEGER", "The highest word N-gram number to to split the text into",
+                                 "(default 1). Note that this only makes sense if the",
+                                 "sentiment file has tokens of similar N-gram length") do |end_ngram|
     options[:end_ngram] = end_ngram.to_i
   end
   opts.separator ""

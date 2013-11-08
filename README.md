@@ -7,9 +7,11 @@ The goal is to have a robust and simple tool that comes with
 
 ### Installation
 The easiest way to get the latest stable version is to use gem:
+
     gem install textmood
 
 If you’d like to get the bleeding-edge version:
+
     git clone https://github.com/stiang/textmood
 
 ### Usage
@@ -30,7 +32,7 @@ score = scorer.score_text("some text")
 scorer = TextMood.new(files: ["en_US-mod1.txt", "emoticons.txt"])
 
 # TextMood will by default make one pass over the text, checking every word, but it
-# supports doing several passes for any range of N-grams. Both the start and end 
+# supports doing several passes for any range of word N-grams. Both the start and end 
 # N-gram can be specified using the :start_ngram and :end_ngram options
 scorer = TextMood.new(lang: "en_US", debug: true, start_ngram: 2, end_ngram: 3)
 score = scorer.score_text("some long text with many words")
@@ -84,7 +86,7 @@ Above 0 is considered positive, below is considered negative.
 
 MANDATORY options:
     -l, --language LANGUAGE          The IETF language tag for the provided text.
-                                     Examples: en_US, pt-BR, no_NB
+                                     Examples: en_US, no_NB
 
               OR
 
@@ -93,22 +95,22 @@ MANDATORY options:
                                      files will be loaded if this option is used.
 
 OPTIONAL options:
-        --start-ngram INTEGER        The lowest N-gram number to split the text into (default 1).
-                                     Note that this only makes sense if the sentiment file
-                                     has tokens of similar N-gram length
+        --start-ngram INTEGER        The lowest word N-gram number to split the text into
+                                     (default 1). Note that this only makes sense if the
+                                     sentiment file has tokens of similar N-gram length
 
-        --end-ngram INTEGER          The highest N-gram number to to split the text into (default 1).
-                                     Note that this only makes sense if the sentiment file
-                                     has tokens of similar N-gram length
+        --end-ngram INTEGER          The highest word N-gram number to to split the text into
+                                     (default 1). Note that this only makes sense if the
+                                     sentiment file has tokens of similar N-gram length
 
     -n, --normalize                  Return 1 (positive), -1 (negative) or 0 (neutral)
                                      instead of the actual score. See also --min and --max.
 
         --min-threshold FLOAT        Scores lower than this are considered negative when
-                                     using --normalize
+                                     using --normalize (default -0.5)
 
         --max-threshold FLOAT        Scores higher than this are considered positive when
-                                     using --normalize
+                                     using --normalize (default 0.5)
 
     -s, --skip-symbols               Do not include symbols file (emoticons etc.).
                                      Only applies when using -l/--language.
