@@ -140,7 +140,7 @@ Above 0 is considered positive, below is considered negative.
 
 MANDATORY options:
     -l, --language LANGUAGE          The IETF language tag for the provided text.
-                                     Examples: en, fr, no_NB, sv,
+                                     Examples: en_US, no_NB
 
               OR
 
@@ -149,6 +149,10 @@ MANDATORY options:
                                      files will be loaded if this option is used.
 
 OPTIONAL options:
+    -a, --alias-file PATH TO FILE    JSON file containing a hash that maps language codes to
+                                     sentiment score files. This lets you use the convenience of
+                                     language codes with custom sentiment score files.
+
     -n, --normalize-score            Tries to normalize the score to an integer between +/- 100
                                      according to the number of tokens that were scored, making
                                      it more feasible to compare scores for texts of different
@@ -159,7 +163,7 @@ OPTIONAL options:
                                      and --max-threshold.
 
     -i, --min-threshold FLOAT        Scores lower than this are considered negative when
-                                     using --ternary-output (default -0.5). Note that the
+                                     using --ternary-output (default 0.5). Note that the
                                      threshold is compared to the normalized score, if applicable
 
     -x, --max-threshold FLOAT        Scores higher than this are considered positive when
