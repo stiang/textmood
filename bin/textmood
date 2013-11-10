@@ -56,6 +56,12 @@ opts_parser = OptionParser.new do |opts|
   end
   opts.separator ""
   opts.separator "OPTIONAL options:"
+  opts.on("-a", "--alias-file PATH TO FILE", "JSON file containing a hash that maps language codes to",
+                                             "sentiment score files. This lets you use the convenience of",
+                                             "language codes with custom sentiment score files.") do |a|
+    options[:alias_file] = a.to_s
+  end
+  opts.separator ""
   opts.on("-n", "--normalize-score", "Tries to normalize the score to an integer between +/- 100",
                                      "according to the number of tokens that were scored, making",
                                      "it more feasible to compare scores for texts of different",

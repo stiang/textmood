@@ -1,5 +1,5 @@
-## TextMood - Simple sentiment analyzer
-*TextMood* is a simple but powerful sentiment analyzer, provided as a Ruby gem with 
+## TextMood - Simple, powerful sentiment analyzer
+TextMood is a simple and powerful sentiment analyzer, provided as a Ruby gem with 
 a command-line tool for simple interoperability with other processes. It takes text 
 as input and returns a sentiment score.
 
@@ -11,6 +11,25 @@ However, TextMood also supports doing multiple passes over the text, splitting
 it into tokens of N words (N-grams) for each pass. By adding multi-word tokens to 
 the sentiment file and using this feature, you can achieve much greater accuracy
 than with just single-word analysis.
+
+### Summary of features
+* Bundles baseline sentiment scores for many languages, making it easy to get started
+* CLI tool that makes it extremely simple to get sentiment scores for any text
+* Supports multiple passes for any range of N-grams
+* Has a flexible API that’s easy to use and understand
+
+### Bundled languages
+* English ("en") - decent quality, copied from cmaclell/Basic-Tweet-Sentiment-Analyzer
+* Russian ("ru") - low quality, raw Google Translate of the English file
+* Spanish ("es") - low quality, raw Google Translate of the English file
+* German ("de") - low quality, raw Google Translate of the English file
+* French ("fr") - low quality, raw Google Translate of the English file
+* Norwegian Bokmål ("no_NB") - low quality, slightly improved Google Translate of the English file
+* Swedish ("se") - low quality, raw Google Translate of the English file
+* Danish ("da") - low quality, raw Google Translate of the English file
+
+Please see the Contribute section for more info on how to improve the quality of these
+files, or adding new ones.
 
 ### Installation
 The easiest way to get the latest stable version is to install the gem:
@@ -33,7 +52,7 @@ You can use it in a Ruby program like this:
 require "textmood"
 
 # The :lang parameter makes TextMood use one of the bundled language sentiment files
-tm = TextMood.new(lang: "en_US")
+tm = TextMood.new(lang: "en")
 score = tm.analyze("some text")
 #=> '1.121'
 
@@ -41,16 +60,20 @@ score = tm.analyze("some text")
 # specified files instead. You can specify as many files as you want.
 tm = TextMood.new(files: ["en_US-mod1.txt", "emoticons.txt"])
 
+# Use :alias_file to make TextMood look up the file to use for the given language tag
+# in a JSON file containing a hash with {"language_tag": "path_to_file"} mappings
+tm = TextMood.new(lang: "zw", alias_file: "my-custom-languages.json")
+
 # :normalize_score will try to normalize the score to an integer between +/- 100,
 # based on how many tokens were scored, which can be useful when trying to compare
 # scores for texts of different length
-tm = TextMood.new(lang: "en_US", normalize_score: true)
+tm = TextMood.new(lang: "en", normalize_score: true)
 score = tm.analyze("some text")
 #=> '14'
 
 # :ternary_output will make TextMood return one of three fixed values:
 # 1 for positive, 0 for neutral and -1 for negative
-tm = TextMood.new(lang: "en_US", ternary_output: true)
+tm = TextMood.new(lang: "en", ternary_output: true)
 score = tm.analyze("some text")
 #=> '1'
 
@@ -58,7 +81,7 @@ score = tm.analyze("some text")
 # treats different values. The options below will make all scores below 10 negative, 
 # 10-20 will be neutral, and above 20 will be positive. Note that these thresholds
 # are compared to the normalized score, if applicable.
-tm = TextMood.new(lang: "en_US", 
+tm = TextMood.new(lang: "en", 
                   ternary_output: true, 
                   normalize_score: true, 
                   min_threshold: 10, 
@@ -69,7 +92,7 @@ score = tm.analyze("some text")
 # TextMood will by default make one pass over the text, checking every word, but it
 # supports doing several passes for any range of word N-grams. Both the start and end 
 # N-gram can be specified using the :start_ngram and :end_ngram options
-tm = TextMood.new(lang: "en_US", debug: true, start_ngram: 2, end_ngram: 3)
+tm = TextMood.new(lang: "en", debug: true, start_ngram: 2, end_ngram: 3)
 score = tm.analyze("some long text with many words")
 #(stdout): some long: 0.1
 #(stdout): long text: 0.1
@@ -84,7 +107,7 @@ score = tm.analyze("some long text with many words")
 
 # :debug prints out all tokens to stdout, alongs with their values (or 'nil' when the
 # token was not found)
-tm = TextMood.new(lang: "en_US", debug: true)
+tm = TextMood.new(lang: "en", debug: true)
 score = tm.analyze("some text")
 #(stdout): some: 0.1
 #(stdout): text: 0.1
@@ -95,13 +118,13 @@ score = tm.analyze("some text")
 #### CLI tool
 You can also pass some UTF-8-encoded text to the CLI tool and get a score back, like so 
 ```bash
-textmood -l en_US "<some text>"
+textmood -l en "<some text>"
 -0.4375
 ```
 
 Alternatively, you can pipe some text to textmood on stdin:
 ```bash
-echo "<some text>" | textmood -l en_US
+echo "<some text>" | textmood -l en
 -0.4375
 ```
 
@@ -117,7 +140,7 @@ Above 0 is considered positive, below is considered negative.
 
 MANDATORY options:
     -l, --language LANGUAGE          The IETF language tag for the provided text.
-                                     Examples: en_US, no_NB
+                                     Examples: en, fr, no_NB, sv,
 
               OR
 
@@ -136,7 +159,7 @@ OPTIONAL options:
                                      and --max-threshold.
 
     -i, --min-threshold FLOAT        Scores lower than this are considered negative when
-                                     using --ternary-output (default 0.5). Note that the
+                                     using --ternary-output (default -0.5). Note that the
                                      threshold is compared to the normalized score, if applicable
 
     -x, --max-threshold FLOAT        Scores higher than this are considered positive when
@@ -164,8 +187,8 @@ OPTIONAL options:
 The included sentiment files reside in the *lang* directory. I hope to add many
 more baseline sentiment files in the future.
 
-Sentiment files should be named according to the IETF language tag, like *en_US*,
-and contain one colon-separated line per token, like so:
+Sentiment files should be named according to the IETF language tag, like *en* or
+*no_NB*, and contain one colon-separated line per token, like so:
 ```
 1.0: epic
 1.0: good
@@ -178,6 +201,8 @@ and contain one colon-separated line per token, like so:
 0.875: well-to-do
 0.875: well-situated
 0.6: well suited
+-0.3: dishonest
+-0.5: tragedy
 ```
 The score, which must be between -1.0 and 1.0, is to the left of the first ':', 
 and everything to the right is the (potentially multi-word) token.

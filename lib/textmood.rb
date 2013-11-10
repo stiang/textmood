@@ -7,6 +7,8 @@ else
   Encoding.default_internal = Encoding::UTF_8
 end
 
+require "json"
+
 NORMALIZE_TO = 100
 
 class TextMood
@@ -18,7 +20,20 @@ class TextMood
     options[:end_ngram]     ||=  1
     @options = options
     if options[:lang]
-      @sentiment_values = load_sentiment_file(File.dirname(__FILE__) + "/../lang/#{options[:lang]}.txt")
+      if options[:alias_file]
+        aliases = load_alias_file(options[:alias_file])
+        if aliases
+          file = aliases[options[:lang]]
+          unless file
+            raise ArgumentError, "Language tag not found in alias file"
+          end
+        else
+          raise ArgumentError, "Alias file not found"
+        end
+      else
+        file = File.dirname(__FILE__) + "/../lang/#{options[:lang]}.txt"
+      end
+      @sentiment_values = load_sentiment_file(file)
       unless options[:include_symbols] == false
         # load the symbols file (emoticons and other symbols)
         @sentiment_values.merge!(load_sentiment_file(File.dirname(__FILE__) + "/../lang/symbols.txt"))
@@ -114,6 +129,12 @@ class TextMood
     sentiment_file.close
 
     sentiment_values
+  end
+
+  # load the specified alias file into a hash
+  def load_alias_file(path)
+    file = File.open(path, "r:UTF-8") {|f| f.read}
+    JSON.parse(file)
   end
 
   def normalize_score(score, count)
