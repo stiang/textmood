@@ -52,7 +52,7 @@ You can use it in a Ruby program like this:
 require "textmood"
 
 # The :lang parameter makes TextMood use one of the bundled language sentiment files
-tm = TextMood.new(lang: "en")
+tm = TextMood.new(language: "en")
 score = tm.analyze("some text")
 #=> '1.121'
 
@@ -62,18 +62,18 @@ tm = TextMood.new(files: ["en_US-mod1.txt", "emoticons.txt"])
 
 # Use :alias_file to make TextMood look up the file to use for the given language tag
 # in a JSON file containing a hash with {"language_tag": "path_to_file"} mappings
-tm = TextMood.new(lang: "zw", alias_file: "my-custom-languages.json")
+tm = TextMood.new(language: "zw", alias_file: "my-custom-languages.json")
 
 # :normalize_score will try to normalize the score to an integer between +/- 100,
 # based on how many tokens were scored, which can be useful when trying to compare
 # scores for texts of different length
-tm = TextMood.new(lang: "en", normalize_score: true)
+tm = TextMood.new(language: "en", normalize_score: true)
 score = tm.analyze("some text")
 #=> '14'
 
 # :ternary_output will make TextMood return one of three fixed values:
 # 1 for positive, 0 for neutral and -1 for negative
-tm = TextMood.new(lang: "en", ternary_output: true)
+tm = TextMood.new(language: "en", ternary_output: true)
 score = tm.analyze("some text")
 #=> '1'
 
@@ -81,7 +81,7 @@ score = tm.analyze("some text")
 # treats different values. The options below will make all scores below 10 negative, 
 # 10-20 will be neutral, and above 20 will be positive. Note that these thresholds
 # are compared to the normalized score, if applicable.
-tm = TextMood.new(lang: "en", 
+tm = TextMood.new(language: "en", 
                   ternary_output: true, 
                   normalize_score: true, 
                   min_threshold: 10, 
@@ -92,7 +92,7 @@ score = tm.analyze("some text")
 # TextMood will by default make one pass over the text, checking every word, but it
 # supports doing several passes for any range of word N-grams. Both the start and end 
 # N-gram can be specified using the :start_ngram and :end_ngram options
-tm = TextMood.new(lang: "en", debug: true, start_ngram: 2, end_ngram: 3)
+tm = TextMood.new(language: "en", debug: true, start_ngram: 2, end_ngram: 3)
 score = tm.analyze("some long text with many words")
 #(stdout): some long: 0.1
 #(stdout): long text: 0.1
@@ -107,7 +107,7 @@ score = tm.analyze("some long text with many words")
 
 # :debug prints out all tokens to stdout, alongs with their values (or 'nil' when the
 # token was not found)
-tm = TextMood.new(lang: "en", debug: true)
+tm = TextMood.new(language: "en", debug: true)
 score = tm.analyze("some text")
 #(stdout): some: 0.1
 #(stdout): text: 0.1
@@ -185,6 +185,43 @@ OPTIONAL options:
                                      or 'nil' if the token was not found in the sentiment file
 
     -h, --help                       Show this message
+```
+
+### Configuration files for the CLI tool
+The CLI tool will look for /etc/textmood and ~/.textmood unless the -c/--config option
+is used, in which case only that file is used. The configuration files are basic, flat
+YAML files that use the same keys as the library understands:
+```yaml
+# Assume that text is in this language, unless overridden on the command line.
+# Do not use this in conjunction with the files setting.
+language: en
+
+# Load these sentiment score files instead of using any of the bundled ones
+# Do not use this in conjunction with the language setting
+files: [/path/to/file1, /path/to/file2]
+
+# Use a global alias file to resolve language codes
+alias_file: /home/john/textmood/aliases.json
+
+# Always normalize the score
+normalize_score: true
+
+# Use ternary output
+ternary_output: true
+
+# Use these thresholds when using ternary output
+max_threshold: 10
+min_threshold: 5
+
+# Do three passes, scoring unigrams, bigrams and trigrams
+start_ngram: 1
+end_ngram: 3
+
+# Do not load the symbols file when using a bundled language
+skip_symbols: true
+
+# Always print debug info
+debug: true
 ```
 
 ## Sentiment files

@@ -17,7 +17,7 @@ include Test::Unit::Assertions
 class TestScorer < Test::Unit::TestCase
 
   def setup
-    @tm = TextMood.new({:lang => "en_US"})
+    @tm = TextMood.new({:language => "en"})
   end
 
   def test_negative

@@ -19,11 +19,11 @@ class TextMood
     options[:start_ngram]   ||=  1
     options[:end_ngram]     ||=  1
     @options = options
-    if options[:lang]
+    if options[:language]
       if options[:alias_file]
         aliases = load_alias_file(options[:alias_file])
         if aliases
-          file = aliases[options[:lang]]
+          file = aliases[options[:language]]
           unless file
             raise ArgumentError, "Language tag not found in alias file"
           end
@@ -31,7 +31,7 @@ class TextMood
           raise ArgumentError, "Alias file not found"
         end
       else
-        file = File.dirname(__FILE__) + "/../lang/#{options[:lang]}.txt"
+        file = File.dirname(__FILE__) + "/../lang/#{options[:language]}.txt"
       end
       @sentiment_values = load_sentiment_file(file)
       unless options[:include_symbols] == false
