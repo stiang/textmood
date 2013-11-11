@@ -51,7 +51,7 @@ You can use it in a Ruby program like this:
 ```ruby
 require "textmood"
 
-# The :lang parameter makes TextMood use one of the bundled language sentiment files
+# The :language parameter makes TextMood use one of the bundled language sentiment files
 tm = TextMood.new(language: "en")
 score = tm.analyze("some text")
 #=> '1.121'
