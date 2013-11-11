@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name          = 'textmood'
-  s.version       = '0.1.1'
+  s.version       = '0.1.2'
   s.date          = '2013-11-08'
   s.summary       = "TextMood"
   s.description   = "Simple sentiment analyzer with CLI tool"

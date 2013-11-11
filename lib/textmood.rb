@@ -138,8 +138,12 @@ class TextMood
   end
 
   def normalize_score(score, count)
-    factor = NORMALIZE_TO.to_f / count.to_f
-    (score * factor).round
+    if score != 0
+      factor = NORMALIZE_TO.to_f / count.to_f
+      (score * factor).round
+    else
+      score
+    end
   end
 
 end
