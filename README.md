@@ -133,10 +133,10 @@ output from `textmood -h`:
 ```
 Usage: textmood [options] "<text>"
             OR
-       echo "<text>" | textmood [options]
+       echo "<text>" | textmood [options]"
 
-Returns a floating-point sentiment score of the provided text.
-Above 0 is considered positive, below is considered negative.
+Returns a sentiment score of the provided text. Above 0 is usually
+considered positive, below is considered negative.
 
 MANDATORY options:
     -l, --language LANGUAGE          The IETF language tag for the provided text.
@@ -180,6 +180,10 @@ OPTIONAL options:
 
     -k, --skip-symbols               Do not include symbols file (emoticons etc.). Only applies
                                      when using -l/--language.
+
+    -c, --config PATH TO FILE        Use the specified config file. If not specified, textmood will look
+                                     for /etc/textmood.cfg and ~/.textmood. Settings in the user config
+                                     will override settings from the global file.
 
     -d, --debug                      Prints out the score for each token in the provided text
                                      or 'nil' if the token was not found in the sentiment file
