@@ -54,31 +54,71 @@ class TextMood
   # analyzes the sentiment of the provided text.
   def analyze(text)
     sentiment_total = 0.0
+    negative_total  = 0.0
+    positive_total  = 0.0
+    neutral_total   = 0.0
 
-    scores_added = 0
+    scores_added   = 0
+    negative_added = 0
+    positive_added = 0
+    neutral_added  = 0
+    not_found      = 0
+
     (@options[:start_ngram]..@options[:end_ngram]).each do |i|
       ngrams(i, text.to_s).each do |token|
         score = score_token(token)
-        unless score.nil?
+        if score.nil?
+          not_found += 1
+        else
           sentiment_total += score
+          if score > 0
+            positive_total += score
+            positive_added += 1
+          elsif score < 0
+            negative_total += score
+            negative_added += 1
+          else
+            neutral_total += score
+            neutral_added += 1
+          end
           scores_added += 1
         end
       end
     end
     
     if @options[:normalize_score]
-      sentiment_total = normalize_score(sentiment_total, scores_added)
+      actual_score = normalize_score(sentiment_total, scores_added)
+    else
+      actual_score = sentiment_total
     end
+
+    if @options[:verbose]
+      puts "" if @options[:debug]
+      combined_avg  = (scores_added > 0) ? ", #{(sentiment_total.to_f / scores_added.to_f)} avg." : ""
+      combined_text = "Combined score: #{sentiment_total} (#{scores_added} tokens#{combined_avg})"
+      puts combined_text
+      negative_avg  = (negative_added > 0) ? ", #{(negative_total.to_f / negative_added.to_f)} avg." : ""
+      negative_text = "Negative score: #{negative_total} (#{negative_added} tokens#{negative_avg})"
+      puts negative_text
+      positive_avg  = (positive_added > 0) ? ", #{(positive_total.to_f / positive_added.to_f)} avg." : ""
+      positive_text = "Positive score: #{positive_total} (#{positive_added} tokens#{positive_avg})"
+      puts positive_text
+      neutral_avg  = (neutral_added > 0) ? ", #{(neutral_total.to_f / neutral_added.to_f)} avg." : ""
+      neutral_text = "Neutral score: #{neutral_total} (#{neutral_added} tokens#{neutral_avg})"
+      puts neutral_text
+      puts "Not found: #{not_found} tokens"
+    end
+
     if @options[:ternary_output]
-      if sentiment_total > @options[:max_threshold]
+      if actual_score > @options[:max_threshold]
         1
-      elsif sentiment_total < @options[:min_threshold]
+      elsif actual_score < @options[:min_threshold]
         -1
       else
         0
       end
     else
-      sentiment_total
+      actual_score
     end
   end
 
@@ -99,10 +139,10 @@ class TextMood
       end
     end
     if sentiment_value
-      puts "#{used_token}: #{sentiment_value}" if @options[:debug]
+      puts "#{used_token}: #{sentiment_value}" if @options[:debug] and not @options[:skip_found_debug]
       sentiment_value
     else
-      puts "#{used_token}: nil" if @options[:debug]
+      puts "#{used_token}: nil" if @options[:debug] and not @options[:skip_not_found_debug]
       nil
     end
   end
@@ -117,12 +157,14 @@ class TextMood
 
     sentiment_file = File.new(path, "r:UTF-8")
     while (line = sentiment_file.gets)
-      parsed_line = line.chomp.split(/\s*([\d.-]+):\s*([^\s].*)/)
-      if parsed_line.size == 3
-        score = parsed_line[1]
-        text = parsed_line[2]
-        if score and text
-          sentiment_values[text.downcase] = score.to_f
+      unless (line.match(/\s*#/))
+        parsed_line = line.chomp.split(/\s*([\d.-]+):\s*([^\s].*)/)
+        if parsed_line.size == 3
+          score = parsed_line[1]
+          text = parsed_line[2]
+          if score and text
+            sentiment_values[text.downcase] = score.to_f
+          end
         end
       end
     end

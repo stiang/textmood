@@ -1,53 +1,40 @@
 1.0: episke
 1.0: god
+1.0: gode
+1.0: beste
 1.0: oppreist
 0.9: heldig
 0.8: fantastisk
 0.8: storøyd
 0.8: velstående
-0.8: godt fast
 0.8: upretensiøs
-0.8: undervurdert
 0.8: terapeutisk
 0.8: selvrespekt
 0.8: helsebringende
 0.8: rosenrød i kinnene
-0.8: utstråle
-0.8: utstråling
 0.8: velstand
 0.8: prinsipiell
-0.8: moraliserende
 0.8: mesterstykke
 0.8: mesterlig
 0.8: mesterlig
 0.8: heldig
 0.8: inspirert
-0.8: idealisert
-0.8: idealisert
-0.8: hylende
 0.8: sendt fra himmelen
-0.8: fungicid
 0.8: eleganse
-0.8: double-farget
-0.8: viderekoble
+0.8: elegant
 0.8: avvæpning
 0.8: herlig
 0.8: anstendighet
+0.8: anstendig
 0.8: blende
 0.8: høflige
-0.8: barnlig
-0.8: skryte
-0.8: bukking
-0.8: bonheur
+0.8: høflig
 0.8: gunstig
-0.8: erkeengelen
 0.8: underholde
 0.8: minnelig
 0.8: rosenrød
-0.8: gjennomgripende
 0.8: rettferdige
 0.8: presis
-0.8: pervertert
 0.8: integritet
 0.8: ideell
 0.8: godhet
@@ -59,11 +46,7 @@
 0.7: helhet
 0.7: velproporsjonert
 0.7: godt bevart
-0.7: godt favoriserte
-0.7: godt favorisert
 0.7: velvillige
-0.7: fordreining
-0.7: bestikkelig
 0.7: urbanitet
 0.7: øverste nivå
 0.7: uaffisert

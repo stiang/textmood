@@ -116,15 +116,20 @@ opts_parser = OptionParser.new do |opts|
     options[:include_symbols] = false
   end
   opts.separator ""
-  opts.on("-c", "--config PATH TO FILE", "Use the specified config file. If not specified, textmood will look",
-                                         "for /etc/textmood.cfg and ~/.textmood. Settings in the user config",
-                                         "will override settings from the global file.") do |c|
+  opts.on("-c", "--config PATH TO FILE", "Use the specified config file. If not specified, textmood will",
+                                         "look for /etc/textmood.cfg and ~/.textmood. Settings in the user",
+                                         "config will override settings from the global file.") do |c|
     options[:config] = c.to_s
   end
   opts.separator ""
   opts.on("-d", "--debug", "Prints out the score for each token in the provided text",
                            "or 'nil' if the token was not found in the sentiment file") do |d|
     options[:debug] = true
+  end
+  opts.separator ""
+  opts.on("-v", "--verbose", "Prints out some useful statistics about the analysis",
+                             "(counts, averages etc).") do |v|
+    options[:verbose] = true
   end
   opts.separator ""
   opts.on_tail("-h", "--help", "Show this message") do

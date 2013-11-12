@@ -51,7 +51,7 @@ You can use it in a Ruby program like this:
 ```ruby
 require "textmood"
 
-# The :language parameter makes TextMood use one of the bundled language sentiment files
+# The :language parameter makes TextMood use one of the bundled language files
 tm = TextMood.new(language: "en")
 score = tm.analyze("some text")
 #=> '1.121'
@@ -115,14 +115,25 @@ score = tm.analyze("some text")
 #=> '0.1'
 ```
 
+# :verbose prints out statistics about the analysis
+tm = TextMood.new(language: "en", verbose: true)
+score = tm.analyze("some slightly longer text that contains a few more tokens")
+#(stdout): Combined score: 1.0 (5 tokens, 0.2 avg.)
+#(stdout): Negative score: -0.5 (1 tokens, -0.5 avg.)
+#(stdout): Positive score: 1.5 (4 tokens, 0.375 avg.)
+#(stdout): Neutral score: 0.0 (0 tokens)
+#(stdout): Not found: 5 tokens
+#=> '1.0'
+```
+
 #### CLI tool
-You can also pass some UTF-8-encoded text to the CLI tool and get a score back, like so 
+You can also pass some UTF-8-encoded text to the CLI tool and get a score back, like so:
 ```bash
 textmood -l en "<some text>"
 -0.4375
 ```
 
-Alternatively, you can pipe some text to textmood on stdin:
+Alternatively, you can pipe text to textmood on stdin:
 ```bash
 echo "<some text>" | textmood -l en
 -0.4375
@@ -181,18 +192,21 @@ OPTIONAL options:
     -k, --skip-symbols               Do not include symbols file (emoticons etc.). Only applies
                                      when using -l/--language.
 
-    -c, --config PATH TO FILE        Use the specified config file. If not specified, textmood will look
-                                     for /etc/textmood.cfg and ~/.textmood. Settings in the user config
-                                     will override settings from the global file.
+    -c, --config PATH TO FILE        Use the specified config file. If not specified, textmood will
+                                     look for /etc/textmood.cfg and ~/.textmood. Settings in the user
+                                     config will override settings from the global file.
 
     -d, --debug                      Prints out the score for each token in the provided text
                                      or 'nil' if the token was not found in the sentiment file
+
+    -v, --verbose                    Prints out some useful statistics about the analysis
+                                     (counts, averages etc).
 
     -h, --help                       Show this message
 ```
 
 ### Configuration files for the CLI tool
-The CLI tool will look for /etc/textmood and ~/.textmood unless the -c/--config option
+The CLI tool will look for */etc/textmood* and *~/.textmood* unless the -c/--config option
 is used, in which case only that file is used. The configuration files are basic, flat
 YAML files that use the same keys as the library understands:
 ```yaml
