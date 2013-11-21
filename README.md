@@ -113,7 +113,6 @@ score = tm.analyze("some text")
 #(stdout): text: 0.1
 #(stdout): some text: -0.1
 #=> '0.1'
-```
 
 # :verbose prints out statistics about the analysis
 tm = TextMood.new(language: "en", verbose: true)
