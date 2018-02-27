@@ -27,6 +27,7 @@ than with just single-word analysis.
 * Norwegian Bokmål ("no_NB") - low quality, slightly improved Google Translate of the English file
 * Swedish ("se") - low quality, raw Google Translate of the English file
 * Danish ("da") - low quality, raw Google Translate of the English file
+* Japanese ("jp") - low quality, slightly improved Google Translate of the English file
 
 Please see the Contribute section for more info on how to improve the quality of these
 files, or adding new ones.
