@@ -157,7 +157,7 @@ class TextMood
 
     sentiment_file = File.new(path, "r:UTF-8")
     while (line = sentiment_file.gets)
-      unless (line.match(/\s*#/))
+      unless (line.match(/^\s*#/))
         parsed_line = line.chomp.split(/\s*([\d.-]+):\s*([^\s].*)/)
         if parsed_line.size == 3
           score = parsed_line[1]
